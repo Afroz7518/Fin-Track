@@ -1404,6 +1404,284 @@ select.form-control option,
 .w-full { width: 100%; }
 
 /* ============================================
+   TRANSACTIONS & REPORTS PAGE LAYOUTS
+   ============================================ */
+.tx-manager-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.tx-filter-card {
+  position: sticky;
+  top: 90px;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.tx-filter-card h4 {
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.tx-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.tx-stat-mini-card {
+  padding: 14px var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.tx-stat-mini-card .icon {
+  font-size: 1.4rem;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tx-stat-mini-card.income .icon { background: var(--color-income-bg); color: var(--color-income-light); }
+.tx-stat-mini-card.expense .icon { background: var(--color-expense-bg); color: var(--color-expense-light); }
+.tx-stat-mini-card.net .icon { background: var(--color-primary-glow); color: var(--color-primary-light); }
+
+.tx-stat-mini-card h4 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.tx-stat-mini-card p {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.tx-date-group {
+  margin-bottom: var(--space-xl);
+}
+
+.tx-date-header {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.tx-date-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.tx-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tx-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px var(--space-lg);
+  gap: var(--space-md);
+}
+
+.tx-item-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateX(4px);
+}
+
+.tx-item-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 0;
+  flex: 1;
+}
+
+.tx-item-icon {
+  font-size: 1.3rem;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+.tx-item-icon.income { border-color: rgba(16, 185, 129, 0.25); color: var(--color-income-light); }
+.tx-item-icon.expense { border-color: rgba(244, 63, 94, 0.25); color: var(--color-expense-light); }
+
+.tx-item-info {
+  min-width: 0;
+}
+.tx-item-desc {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tx-item-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+
+.tx-item-category {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  background: var(--bg-input);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.tx-item-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-shrink: 0;
+}
+
+.tx-item-amount {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.tx-item-amount.income { color: var(--color-income-light); }
+.tx-item-amount.expense { color: var(--color-expense-light); }
+
+/* Reports Page Layouts */
+.reports-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.report-insight-card {
+  padding: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.report-insight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+}
+.report-insight-card.savings::before { background: linear-gradient(to bottom, var(--color-income), var(--color-income-light)); }
+.report-insight-card.highest::before { background: linear-gradient(to bottom, var(--color-expense), var(--color-expense-light)); }
+.report-insight-card.efficiency::before { background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-light)); }
+.report-insight-card.health::before { background: linear-gradient(to bottom, var(--color-warning), #fbbf24); }
+
+.report-insight-card .card-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.report-insight-card h4 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.report-insight-icon-badge {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+}
+
+.report-insight-val {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 6px 0;
+  letter-spacing: -0.02em;
+}
+.report-insight-val.income { color: var(--color-income-light); }
+.report-insight-val.expense { color: var(--color-expense-light); }
+.report-insight-val.primary { color: var(--color-primary-light); }
+.report-insight-val.warning { color: var(--color-warning); }
+
+.report-insight-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.reports-charts-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.reports-categories-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.report-categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.report-category-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-category-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* ============================================
    RESPONSIVE BREAKPOINTS
    ============================================ */
 
@@ -1416,6 +1694,10 @@ select.form-control option,
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
+  .reports-insights-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
 }
 
 /* ---- 900px: tighter padding ---- */
@@ -1425,6 +1707,17 @@ select.form-control option,
   }
   .topbar {
     padding: var(--space-md) var(--space-lg);
+  }
+  .tx-manager-layout {
+    grid-template-columns: 1fr;
+  }
+  .tx-filter-card {
+    position: static;
+    margin-bottom: var(--space-md);
+  }
+  .reports-charts-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
 }
 
@@ -1532,6 +1825,22 @@ select.form-control option,
   .chart-card {
     padding: var(--space-md);
   }
+
+  /* Transactions and Reports Mobile Overrides */
+  .tx-stats-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .reports-categories-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .tx-item-card {
+    padding: 12px;
+  }
+  .tx-item-right {
+    gap: var(--space-md);
+  }
 }
 
 /* ---- 480px: Mobile small — single column ---- */
@@ -1557,4 +1866,13 @@ select.form-control option,
   }
 
   h1 { font-size: 1.1rem; }
+
+  .reports-insights-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .tx-item-desc {
+    font-size: 0.85rem;
+  }
 }
+

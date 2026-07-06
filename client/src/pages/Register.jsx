@@ -37,8 +37,8 @@ const Register = () => {
     if (result.success) navigate('/');
   };
 
-  const InputField = ({ icon, name, type = 'text', placeholder, label }) => (
-    <div className="form-group">
+  const renderInputField = (icon, name, type, placeholder, label) => (
+    <div className="form-group" key={name}>
       <label className="form-label">{label}</label>
       <div style={{ position: 'relative' }}>
         <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }}>
@@ -88,10 +88,10 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          <InputField icon={<MdPerson />} name="name" placeholder="John Doe" label="Full Name" />
-          <InputField icon={<MdEmail />} name="email" type="email" placeholder="you@example.com" label="Email Address" />
-          <InputField icon={<MdLock />} name="password" placeholder="Min. 6 characters" label="Password" />
-          <InputField icon={<MdLock />} name="confirmPassword" placeholder="Repeat password" label="Confirm Password" />
+          {renderInputField(<MdPerson />, 'name', 'text', 'John Doe', 'Full Name')}
+          {renderInputField(<MdEmail />, 'email', 'email', 'you@example.com', 'Email Address')}
+          {renderInputField(<MdLock />, 'password', 'password', 'Min. 6 characters', 'Password')}
+          {renderInputField(<MdLock />, 'confirmPassword', 'password', 'Repeat password', 'Confirm Password')}
 
           <button
             type="submit"
