@@ -1,20 +1,35 @@
 const mongoose = require('mongoose');
 
+let cached = global._mongooseCache;
+if (!cached) {
+  cached = global._mongooseCache = { conn: null, promise: null };
+}
+
 const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error(`\n❌ MongoDB Connection Error: ${error.message}`);
-    console.error(`\n👉 To fix this, choose one of the following options:`);
-    console.error(`   1. Install & start MongoDB locally: https://www.mongodb.com/try/download/community`);
-    console.error(`      Then run: mongod`);
-    console.error(`   2. Use MongoDB Atlas (free cloud): https://cloud.mongodb.com`);
-    console.error(`      Then update MONGO_URI in server/.env with your Atlas connection string\n`);
-    console.error(`   Server will keep retrying every 5 seconds...\n`);
-    // Retry after 5 seconds instead of crashing
-    setTimeout(connectDB, 5000);
+  if (cached.conn) {
+    return cached.conn;
   }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(process.env.MONGO_URI, opts).then((m) => {
+      console.log(`✅ MongoDB Connected: ${m.connection.host}`);
+      return m;
+    });
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (error) {
+    cached.promise = null;
+    console.error(`❌ MongoDB Connection Error: ${error.message}`);
+    throw error;
+  }
+
+  return cached.conn;
 };
 
 module.exports = connectDB;
